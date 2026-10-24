@@ -3,6 +3,8 @@ import { api } from '../api'
 import { Badge } from '../components/Badge'
 import { Alert } from '../components/Alert'
 import { EmptyState } from '../components/EmptyState'
+import { LinkButton } from '../components/LinkButton'
+import { exerciseVideoUrl, recipeUrl } from '../utils/links'
 
 /**
  * RecommendationsPage:
@@ -154,6 +156,13 @@ export function RecommendationsPage() {
                       <strong style={{ color: 'var(--text-primary)' }}>Why recommended: </strong>
                       {ex.reason}
                     </div>
+
+                    <LinkButton
+                      href={exerciseVideoUrl(ex.name)}
+                      label={`Watch how to do ${ex.name} on YouTube`}
+                    >
+                      ▶ Watch how
+                    </LinkButton>
                   </div>
 
                   {/* Rating Buttons */}
@@ -286,6 +295,13 @@ export function RecommendationsPage() {
                       <strong style={{ color: 'var(--text-primary)' }}>Why recommended: </strong>
                       {food.reason}
                     </div>
+
+                    <LinkButton
+                      href={recipeUrl(food.name, food.diet_type)}
+                      label={`Find a recipe for ${food.name} on YouTube`}
+                    >
+                      🍳 Recipe
+                    </LinkButton>
                   </div>
 
                   {/* Rating Buttons */}

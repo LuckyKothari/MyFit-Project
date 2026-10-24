@@ -105,3 +105,14 @@ describe('UI Components & Accessibility', () => {
     expect(await screen.findAllByText(/Why recommended:/i)).toBeTruthy()
   })
 })
+
+describe('Exercise video and recipe links', () => {
+  it('builds encoded YouTube search URLs', async () => {
+    const { exerciseVideoUrl, recipeUrl } = await import('../utils/links')
+    expect(exerciseVideoUrl('Push-ups')).toBe(
+      'https://www.youtube.com/results?search_query=how%20to%20do%20Push-ups%20proper%20form'
+    )
+    expect(recipeUrl('Paneer Tikka', 'veg')).toContain('vegetarian%20recipe')
+    expect(recipeUrl('Grilled Chicken', 'nonveg')).not.toContain('vegetarian')
+  })
+})

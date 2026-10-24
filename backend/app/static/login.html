@@ -402,6 +402,23 @@
       color: #93c5fd;
     }
 
+    .link-btn {
+      display: inline-block;
+      padding: 0.35rem 0.7rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .link-btn:hover {
+      border-color: #34d399;
+      color: #34d399;
+    }
+
     /* Star Rating */
     .star-rating-box {
       margin-top: 0.75rem;
@@ -854,6 +871,16 @@
   </footer>
 
   <script>
+    // YouTube search links for exercise tutorials and food recipes
+    function youtubeSearch(q) {
+      return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+    }
+    function exerciseVideoUrl(name) {
+      return youtubeSearch('how to do ' + name + ' proper form');
+    }
+    function recipeUrl(name, dietType) {
+      return youtubeSearch(name + ' healthy ' + (dietType === 'veg' ? 'vegetarian ' : '') + 'recipe');
+    }
     let currentMode = 'login';
     const API_BASE = window.location.origin;
     let currentUserData = null;
@@ -1324,6 +1351,7 @@
                 <h4>${ex.name}</h4>
                 <div class="rec-meta">⏱️ ${ex.duration_min} min • 🔥 ~${Math.round(ex.est_kcal)} kcal burn</div>
                 <div class="rec-badge">${ex.reason || 'Personalized for you'}</div>
+                <a class="link-btn" href="${exerciseVideoUrl(ex.name)}" target="_blank" rel="noopener noreferrer" aria-label="Watch how to do ${ex.name} on YouTube">▶ Watch how</a>
               </div>
               <div class="star-rating-box">
                 <div class="stars-group" title="Rate this workout to log and personalize">
@@ -1358,6 +1386,7 @@
                 <div style="font-size: 0.78rem; color: #94a3b8;">
                   P: ${fd.macros?.protein_g || 0}g | C: ${fd.macros?.carbs_g || 0}g | F: ${fd.macros?.fat_g || 0}g
                 </div>
+                <a class="link-btn" href="${recipeUrl(fd.name, fd.diet_type)}" target="_blank" rel="noopener noreferrer" aria-label="Find a recipe for ${fd.name} on YouTube">🍳 Recipe</a>
               </div>
               <div class="star-rating-box">
                 <div class="stars-group" title="Rate this meal to log and personalize">

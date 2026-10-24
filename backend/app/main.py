@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from backend.app.core.config import settings
 from backend.app.db.mongodb import connect_to_mongo, close_mongo_connection
 from backend.app.api.v1.auth import router as auth_router
@@ -194,9 +194,12 @@ _STATIC_LOGIN_HTML = Path(__file__).resolve().parent / "static" / "login.html"
 async def serve_login_page():
     """Serves the standalone interactive login & dashboard portal."""
     if _STATIC_LOGIN_HTML.exists():
-        return FileResponse(_STATIC_LOGIN_HTML, media_type="text/html")
+        html = _STATIC_LOGIN_HTML.read_text(encoding="utf-8")
+        # Point the portal's nav links at the deployed dashboard / same-origin docs
+        html = html.replace("http://localhost:8501", settings.DASHBOARD_URL)
+        html = html.replace("http://localhost:8000/docs", "/docs")
+        return HTMLResponse(html)
     return JSONResponse(
         status_code=404,
         content={"detail": "Login portal page not found"},
     )
-

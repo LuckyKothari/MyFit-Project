@@ -27,6 +27,9 @@ class Settings(BaseSettings):
         "http://localhost:3000",
     ]
 
+    # Public URL of the Streamlit dashboard (linked from the web portal)
+    DASHBOARD_URL: str = "http://localhost:8501"
+
     # Rate-limiting (requests per window)
     AUTH_RATE_LIMIT_REQUESTS: int = 60
     AUTH_RATE_LIMIT_SECONDS: int = 60

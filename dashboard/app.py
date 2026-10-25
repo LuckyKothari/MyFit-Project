@@ -7,7 +7,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from dashboard.api_client import fetch_population_analytics, fetch_user_analytics
+from dashboard.api_client import (
+    DEFAULT_API_BASE,
+    fetch_population_analytics,
+    fetch_user_analytics,
+)
 from dashboard.charts import (
     create_activity_pie,
     create_bmi_pie,
@@ -51,9 +55,9 @@ with st.sidebar.expander("🔑 Quick Login / Sign In", expanded=not bool(st.sess
         try:
             import requests
             res = requests.post(
-                "http://127.0.0.1:8000/api/v1/auth/login",
+                f"{DEFAULT_API_BASE}/auth/login",
                 json={"email": login_email, "password": login_pwd},
-                timeout=5.0,
+                timeout=60.0,  # free-tier backends can take ~50s to wake up
             )
             if res.status_code == 200:
                 st.session_state["auth_token"] = res.json().get("access_token", "")

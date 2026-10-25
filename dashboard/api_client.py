@@ -10,8 +10,9 @@ from dashboard.loaders import (
     load_food_macros,
 )
 
-# Why: Defaulting to 127.0.0.1 avoids IPv6 resolution latency on Windows.
-DEFAULT_API_BASE = os.getenv("API_BASE_URL", "http://127.0.0.1:8000/api/v1")
+# Why: Defaults to the deployed backend so the hosted dashboard works out of the box.
+# For local development set API_BASE_URL=http://127.0.0.1:8000/api/v1 (127.0.0.1 avoids IPv6 latency on Windows).
+DEFAULT_API_BASE = os.getenv("API_BASE_URL", "https://myfit-project.onrender.com/api/v1")
 
 
 def get_offline_population_analytics() -> dict[str, Any]:
